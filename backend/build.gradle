@@ -57,3 +57,7 @@ compileJava.dependsOn('openApiGenerate')
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.named('bootJar') {
+	enabled = true
+}

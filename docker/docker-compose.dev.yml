@@ -1,0 +1,7 @@
+services:
+  backend:
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+  db:
+    ports:
+      - "5432:5432"
