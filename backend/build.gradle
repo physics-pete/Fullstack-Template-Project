@@ -1,0 +1,59 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.openapi.generator' version '7.2.0'
+}
+
+group = 'de.physiscspete.fullstacktemplate'
+version = '0.0.1-SNAPSHOT'
+description = 'This is a backend'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'jakarta.validation:jakarta.validation-api'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'io.swagger.core.v3:swagger-annotations:2.2.20'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+}
+
+openApiGenerate {
+	generatorName = "spring"
+	inputSpec = "$rootDir/src/main/resources/api.yaml"
+	outputDir = layout.buildDirectory.dir("generated").get().asFile.toString()
+	apiPackage = "de.physiscspete.fullstacktemplate.api"
+	modelPackage = "de.physiscspete.fullstacktemplate.model"
+	configOptions = [
+			interfaceOnly: "true",        // Nur Interfaces generieren
+			useSpringBoot3: "true",
+			useTags: "true",
+			skipDefaultInterface: "true",
+	]
+}
+
+sourceSets.main.java.srcDirs += layout.buildDirectory.dir("generated/src/main/java").get().asFile
+compileJava.dependsOn('openApiGenerate')
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

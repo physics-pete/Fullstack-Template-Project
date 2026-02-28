@@ -1,0 +1,36 @@
+openapi: 3.1.0
+info:
+  title: Fullstack Template Backend
+  description: A small sample for a generic backend to showcase a fullstack application
+  version: 1.0.0
+servers:
+  - url: 'http'
+paths:
+  /notes:
+    get:
+      tags:
+        - Notes
+      summary: Alle Notizen abrufen
+      operationId: getNotes
+      responses:
+        '200':
+          description: Liste aller Notizen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+
+
