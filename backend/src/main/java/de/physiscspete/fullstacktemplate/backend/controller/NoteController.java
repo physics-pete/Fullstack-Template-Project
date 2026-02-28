@@ -19,6 +19,6 @@ public class NoteController implements NotesApi {
     @Override
     public ResponseEntity<List<Note>> getNotes() {
         List<Note> notes = noteService.findAll();
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(notes);
     }
 }

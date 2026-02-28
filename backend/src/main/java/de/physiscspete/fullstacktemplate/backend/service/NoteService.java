@@ -1,6 +1,5 @@
 package de.physiscspete.fullstacktemplate.backend.service;
 
-import de.physiscspete.fullstacktemplate.backend.mapper.NoteMapper;
 import de.physiscspete.fullstacktemplate.model.Note;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
