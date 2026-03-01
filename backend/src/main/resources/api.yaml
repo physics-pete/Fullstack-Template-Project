@@ -21,16 +21,73 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Note'
+    put:
+      tags:
+        - Notes
+      summary: Adds a new note
+      operationId: addNewNote
+      requestBody:
+        $ref: '#/components/requestBodies/NoteRequest'
+      responses:
+        '201':
+          description: Note has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteCreated'
+  /notes/{id}:
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      tags:
+        - Notes
+      summary: deletes a specific note
+      operationId: deleteNote
+      responses:
+        '204':
+          description: Note deleted
+
 components:
   schemas:
     Note:
       type: object
+      required:
+        - title
+        - content
       properties:
-        id:
-          type: string
         title:
           type: string
         content:
           type: string
+    NoteResponse:
+      allOf:
+        - $ref: '#/components/schemas/Note'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+    NoteCreated:
+      type: object
+      required:
+        - uri
+      properties:
+        uri:
+          type: string
+          format: url
+  requestBodies:
+    NoteRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Note'
 
 
